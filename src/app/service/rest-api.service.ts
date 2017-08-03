@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import * as Settings from '../settings';
-//import {Http, Response, Headers, RequestOptions} from "@angular/http";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {Observable} from 'rxjs/Observable';
@@ -11,7 +10,7 @@ import {User} from "../models/user";
 
 
 @Injectable()
-export class RestApiService {
+export class RestApiService{
 
   private restUrl = Settings.REST_URL;
   token$ = new Subject<string>();
@@ -28,6 +27,11 @@ export class RestApiService {
 
 
   constructor(private http: HttpClient) {
+    console.log('rest api service constructed')
+    if (localStorage['token']){
+      this.token$.next(localStorage['token'])
+    }
+
   }
 
   private fetchData(url: string, auth: boolean = false): any {
@@ -43,7 +47,7 @@ export class RestApiService {
   }
 
   fetchUser() {
-    this.fetchData(`${this.restUrl}/auth/me`, true).subscribe(
+    this.fetchData('auth/me', true).subscribe(
       user => {
         this.currentUser$.next(user)
       }
@@ -83,7 +87,7 @@ export class RestApiService {
   }
 
   logout() {
-    this.http.post(`${this.restUrl}/logout/`, {}, this.getAuthHeader()).subscribe(
+    this.http.post(`${this.restUrl}/auth/logout/`, {}, this.getAuthHeader()).subscribe(
       data => {
         localStorage.removeItem('token');
         this.token = '';
