@@ -1,6 +1,15 @@
-<ul *ngIf="currentUser; else signInUpBlock" class="nav navbar-nav navbar-right">
-  <li>{{user}}</li>
-  <li><a>logout</a></li>
+<ul *ngIf="token; else signInUpBlock" class="nav navbar-nav navbar-right">
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{currentUser?.first_name}}<span
+      class="caret"></span></a>
+    <ul class="dropdown-menu" role="menu">
+      <li><a href="#">我的任务</a></li>
+      <li><a href="#">个人信息</a></li>
+      <li class="divider"></li>
+      <li><a (click)="logout()"><span class="glyphicon glyphicon-off"></span> 登出</a></li>
+      <li class="divider"></li>
+    </ul>
+  </li>
 </ul>
 <ng-template #signInUpBlock>
   <ul class="nav navbar-nav navbar-right">

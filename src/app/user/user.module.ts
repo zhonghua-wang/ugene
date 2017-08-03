@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
 import {UserOrLoginComponent} from "./user-or-login/user-or-login.component";
 import {SignInComponent} from "./sign-in/sign-in.component";
@@ -26,4 +26,5 @@ import {RouterModule} from "@angular/router";
     SignInComponent,
   ]
 })
-export class UserModule { }
+export class UserModule {
+}

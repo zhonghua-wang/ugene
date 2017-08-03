@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from "../../models/user";
+import {RestApiService} from "../../service/rest-api.service";
 
 @Component({
   selector: 'app-user-or-login',
@@ -8,10 +9,25 @@ import {User} from "../../models/user";
 })
 export class UserOrLoginComponent implements OnInit {
   currentUser: User;
-  constructor() { }
+  token: string;
+
+  constructor(private restAPIService: RestApiService) { }
 
   ngOnInit() {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    this.restAPIService.token$.subscribe(
+      token => {
+        this.token = token
+        console.log('token: ' + this.token)
+      }
+    )
+    this.restAPIService.currentUser$.subscribe(
+      user => {
+        this.currentUser = user
+        console.log(user)
+      }
+    )
   }
-
+  logout(){
+    this.restAPIService.logout();
+  }
 }
