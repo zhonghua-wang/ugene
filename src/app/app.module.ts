@@ -10,6 +10,7 @@ import { AboutComponent } from './about/about.component';
 import {ErrorModule} from "./error/error.module";
 import {UserModule} from "./user/user.module";
 import {HttpClientModule} from "@angular/common/http"
+import {RestApiService} from "./service/rest-api.service";
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import {HttpClientModule} from "@angular/common/http"
     UserModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [RestApiService,],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

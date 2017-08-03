@@ -1,3 +1,10 @@
-<p>
-  user-or-login works!
-</p>
+<ul *ngIf="currentUser; else signInUpBlock" class="nav navbar-nav navbar-right">
+  <li>{{user}}</li>
+  <li><a>logout</a></li>
+</ul>
+<ng-template #signInUpBlock>
+  <ul class="nav navbar-nav navbar-right">
+    <li><a routerLink="sign-in">登录</a></li>
+    <li><a routerLink="sign-up">注册</a></li>
+  </ul>
+</ng-template>
