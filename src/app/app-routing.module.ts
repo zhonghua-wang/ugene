@@ -6,6 +6,7 @@ import {HelpComponent} from "./help/help.component";
 import {PageNotFoundComponent} from "./error/page-not-found/page-not-found.component";
 import {SignUpComponent} from "./user/sign-up/sign-up.component";
 import {SignInComponent} from "./user/sign-in/sign-in.component";
+import {GeneJobComponent} from "./gene/gene-job/gene-job.component";
 
 const routes: Routes = [
   {
@@ -25,6 +26,10 @@ const routes: Routes = [
     path: 'help' ,
     component: HelpComponent
   } ,
+  {
+    path: 'gene',
+    component: GeneJobComponent,
+  },
   {path: 'sign-in' , component: SignInComponent} ,
   {path: 'sign-up' , component: SignUpComponent},
   {

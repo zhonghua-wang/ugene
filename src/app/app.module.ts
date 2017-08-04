@@ -11,6 +11,7 @@ import {ErrorModule} from "./error/error.module";
 import {UserModule} from "./user/user.module";
 import {HttpClientModule} from "@angular/common/http"
 import {RestApiService} from "./service/rest-api.service";
+import {GeneModule} from "./gene/gene.module";
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {RestApiService} from "./service/rest-api.service";
     ErrorModule,
     UserModule,
     HttpClientModule,
+    GeneModule,
   ],
   providers: [RestApiService,],
   bootstrap: [AppComponent]
