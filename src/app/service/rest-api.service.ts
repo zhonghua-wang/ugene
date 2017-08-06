@@ -29,6 +29,7 @@ export class RestApiService{
   constructor(private http: HttpClient) {
     console.log('rest api service constructed')
     if (localStorage['token']){
+      console.log(`token ${localStorage['token']}`)
       this.token$.next(localStorage['token'])
     }
 

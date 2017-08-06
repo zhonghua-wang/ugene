@@ -1,32 +1,33 @@
 
-<form *ngIf="!submitted;else JobDetailBlock" class="form-horizontal well col-lg-8" (ngSubmit)="onSubmit()" #jobForm="ngForm">
+<div class="well col-md-8">
+<form *ngIf="!submitted;else JobDetailBlock" class="form-horizontal" (ngSubmit)="onSubmit()" #jobForm="ngForm">
   <fieldset>
     <legend class="page-header">请出入突变基因信息</legend>
     <div class="form-group">
       <label for="job_name" class="col-lg-2 control-label">任务名称</label>
       <div class="col-lg-4">
-        <input class="form-control" id="job_name" [(ngModel)]="job.name" placeholder="请输入任务名称" type="text">
+        <input class="form-control" id="job_name" [(ngModel)]="job.name" placeholder="请输入任务名称" name="job_name" type="text">
       </div>
       <label for="gene_name" class="col-lg-2 control-label">基因名称</label>
       <div class="col-lg-4">
-        <input class="form-control" id="gene_name" [(ngModel)]="job.gene_name" placeholder="请输入基因名称" type="text">
+        <input class="form-control" id="gene_name" [(ngModel)]="job.gene_name" placeholder="请输入基因名称" name="gene_name" type="text">
       </div>
     </div>
       <div class="form-group">
         <label for="position" class="col-lg-2 control-label">突变位置</label>
         <div class="col-lg-4">
-          <input class="form-control" id="position" [(ngModel)]="mutant.position" placeholder="请输入突变位置" type="text">
+          <input class="form-control" id="position" [(ngModel)]="mutant.position" placeholder="请输入突变位置" name="position" type="text">
         </div>
 
         <label for="position" class="col-lg-2 control-label">突变氨基酸</label>
         <div class="col-lg-4">
-          <input class="form-control" id="mutation" placeholder="请输入突变氨基酸" type="text">
+          <input class="form-control" id="mutation" [(ngModel)]="mutant.mutation" placeholder="请输入突变氨基酸" type="text" name="mutation">
         </div>
     </div>
     <div class="form-group">
       <label for="textArea" class="col-lg-2 control-label">基因序列</label>
       <div class="col-lg-10">
-        <textarea class="form-control" rows="3" id="textArea" placeholder="请输入基因序列"></textarea>
+        <textarea class="form-control" rows="3" id="textArea" [(ngModel)]="job.gene_sequence" placeholder="请输入基因序列" name="gene_sequence"></textarea>
         <span class="help-block"></span>
       </div>
     </div>
@@ -39,6 +40,10 @@
   </fieldset>
 </form>
 <ng-template #JobDetailBlock>
-<h3>谢谢，您已经成功提交了任务。</h3>
-  <button (click)="newJob()" class="btn btn-default">添加新的任务</button>
+  <h4 class="">恭喜!您的任务已经成功提交,稍后我们会向您预留的邮箱发送任务进度。收到邮件后请及时返回查看.</h4>
+  <button (click)="newJob()" class="btn btn-default">继续提交</button>
 </ng-template>
+</div>
+<div *ngIf="currentUser" class="col-mg-4 table-bordered">
+aaaa
+</div>

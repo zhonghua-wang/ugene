@@ -8,8 +8,8 @@ import {RestApiService} from "../../service/rest-api.service";
   styleUrls: ['./user-or-login.component.css']
 })
 export class UserOrLoginComponent implements OnInit {
-  currentUser: User;
-  token: string;
+  currentUser: User = new User();
+  token: string = '';
 
   constructor(private restAPIService: RestApiService) {
     console.log('user-or-login constructed')
@@ -26,7 +26,7 @@ export class UserOrLoginComponent implements OnInit {
     this.restAPIService.currentUser$.subscribe(
       user => {
         this.currentUser = user
-        console.log(user)
+        console.log(user.username)
       }
     )
   }
