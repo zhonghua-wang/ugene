@@ -1,4 +1,5 @@
 import {User} from "./user";
+import {Mutant} from "./mutant";
 
 export class Job {
   constructor(public gene_sequence?: string,
@@ -7,6 +8,7 @@ export class Job {
               public id?: number,
               public created_at?: string,
               public status?: boolean,
+              public mutant_set?: number[] | Mutant[],
               public user?: number | User) {
   }
 }
