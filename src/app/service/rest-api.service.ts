@@ -2,39 +2,54 @@ import {Injectable} from '@angular/core';
 import * as Settings from '../settings';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/share';
 import {Observable} from 'rxjs/Observable';
 import {Subscriber} from 'rxjs/Subscriber';
 import {Subject} from 'rxjs/Subject';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject'
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {User} from "../models/user";
+import {Job} from "../models/job";
 
 
 @Injectable()
 export class RestApiService{
 
   private restUrl = Settings.REST_URL;
-  token$ = new Subject<string>();
-  currentUser$ = new Subject<User>();
+  private _token = new BehaviorSubject('');
+  private _currentUser = new BehaviorSubject(new User());
+  private _jobList = new BehaviorSubject(new Job())
+  token$ = this._token.asObservable();
+  currentUser$ = this._currentUser.asObservable()
 
-  set token(value: string) {
-    this.token$.next(value);
-    localStorage.setItem('token', value)
+  setToken(token){
+    return this._token.next(token)
   }
-
-  get token(): string {
-    return localStorage.getItem('token')
+  setCurrentUser(currentUser: User){
+    return this._currentUser.next(currentUser)
   }
 
 
   constructor(private http: HttpClient) {
     console.log('rest api service constructed')
+    // if token is already stored in localStorage
     if (localStorage['token']){
-      console.log(`token ${localStorage['token']}`)
-      this.token$.next(localStorage['token'])
+      console.log(`token ${localStorage['token']}`);
+      this.setToken(localStorage['token']);
+      this.fetchUser();
     }
 
   }
-
+  private _postData(url: string, data: any, auth: boolean=true): any{
+    if (auth){
+      return this.http.post(`${this.restUrl}/${url}`, data, {
+        headers: new HttpHeaders().set('Authorization', 'Token ' + localStorage.getItem('token'))
+      });
+    }
+    else{
+      return this.http.post(`${this.restUrl}/${url}`, data);
+    }
+  }
   private fetchData(url: string, auth: boolean = false): any {
     if (auth) {
       return this.http.get(`${this.restUrl}/${url}`, {
@@ -50,7 +65,7 @@ export class RestApiService{
   fetchUser() {
     this.fetchData('auth/me', true).subscribe(
       user => {
-        this.currentUser$.next(user)
+        this.setCurrentUser(user)
       }
     )
   }
@@ -65,7 +80,7 @@ export class RestApiService{
         console.log(data);
         if (data && data['auth_token']) {
           localStorage.setItem('token', data['auth_token']);
-          this.token = data['auth_token'];
+          this.setToken(data['auth_token'])
           // get current user profile
           this.fetchUser();
         }
@@ -91,10 +106,25 @@ export class RestApiService{
     this.http.post(`${this.restUrl}/auth/logout/`, {}, this.getAuthHeader()).subscribe(
       data => {
         localStorage.removeItem('token');
-        this.token = '';
-        this.currentUser$.next(null)
+        this.setToken('')
+        this.setCurrentUser(null)
+      },
+      error => {
+        localStorage.removeItem('token');
+        this.setToken('')
+        this.setCurrentUser(null)
       }
     )
+  }
+
+  // get user job list
+  getJobs(userId: string): Observable<any>{
+    return this.fetchData(`jobs/?filter{user}=${userId}`, true)
+      .map(data => data.jobs)
+  }
+
+  addJob(job: any): Observable<any>{
+    return this._postData('jobs/', job, true);
   }
 
 

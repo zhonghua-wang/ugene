@@ -4,6 +4,8 @@ import {FormsModule} from "@angular/forms";
 
 // import { GeneRoutingModule } from './gene-routing.module';
 import { GeneJobComponent } from './gene-job/gene-job.component';
+import { JobListComponent } from './job-list/job-list.component';
+import { JobStatusPipe } from './job-status.pipe';
 
 @NgModule({
   imports: [
@@ -11,6 +13,6 @@ import { GeneJobComponent } from './gene-job/gene-job.component';
     FormsModule,
     // GeneRoutingModule
   ],
-  declarations: [GeneJobComponent]
+  declarations: [GeneJobComponent, JobListComponent, JobStatusPipe]
 })
 export class GeneModule { }

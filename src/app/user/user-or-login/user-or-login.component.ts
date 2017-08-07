@@ -10,6 +10,7 @@ import {RestApiService} from "../../service/rest-api.service";
 export class UserOrLoginComponent implements OnInit {
   currentUser: User = new User();
   token: string = '';
+  displayName: string = '';
 
   constructor(private restAPIService: RestApiService) {
     console.log('user-or-login constructed')
@@ -25,8 +26,9 @@ export class UserOrLoginComponent implements OnInit {
     )
     this.restAPIService.currentUser$.subscribe(
       user => {
-        this.currentUser = user
-        console.log(user.username)
+        this.currentUser = user;
+        this.displayName = user.last_name + user.first_name || user.username;
+        console.log(user.username);
       }
     )
   }

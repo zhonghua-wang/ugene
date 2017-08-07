@@ -1,49 +1,67 @@
-
 <div class="well col-md-8">
-<form *ngIf="!submitted;else JobDetailBlock" class="form-horizontal" (ngSubmit)="onSubmit()" #jobForm="ngForm">
-  <fieldset>
-    <legend class="page-header">请出入突变基因信息</legend>
-    <div class="form-group">
-      <label for="job_name" class="col-lg-2 control-label">任务名称</label>
-      <div class="col-lg-4">
-        <input class="form-control" id="job_name" [(ngModel)]="job.name" placeholder="请输入任务名称" name="job_name" type="text">
+  <form *ngIf="!submitted;else JobDetailBlock" class="form-horizontal" (ngSubmit)="onSubmit()" #jobForm="ngForm">
+    <fieldset>
+      <legend class="page-header">请出入突变基因信息</legend>
+      <div class="form-group">
+        <label for="job_name" class="col-lg-2 control-label">任务名称</label>
+        <div class="col-lg-4">
+          <input class="form-control" id="job_name" [(ngModel)]="job.name" placeholder="请输入任务名称" name="job_name"
+                 type="text">
+        </div>
+        <label for="gene_name" class="col-lg-2 control-label">基因名称</label>
+        <div class="col-lg-4">
+          <input class="form-control" id="gene_name" [(ngModel)]="job.gene_name" placeholder="请输入基因名称" name="gene_name"
+                 type="text">
+        </div>
       </div>
-      <label for="gene_name" class="col-lg-2 control-label">基因名称</label>
-      <div class="col-lg-4">
-        <input class="form-control" id="gene_name" [(ngModel)]="job.gene_name" placeholder="请输入基因名称" name="gene_name" type="text">
-      </div>
-    </div>
       <div class="form-group">
         <label for="position" class="col-lg-2 control-label">突变位置</label>
         <div class="col-lg-4">
-          <input class="form-control" id="position" [(ngModel)]="mutant.position" placeholder="请输入突变位置" name="position" type="text">
+          <input class="form-control" id="position" [(ngModel)]="mutant.position" placeholder="请输入突变位置" name="position"
+                 type="text">
         </div>
 
         <label for="position" class="col-lg-2 control-label">突变氨基酸</label>
         <div class="col-lg-4">
-          <input class="form-control" id="mutation" [(ngModel)]="mutant.mutation" placeholder="请输入突变氨基酸" type="text" name="mutation">
+          <input class="form-control" id="mutation" [(ngModel)]="mutant.mutation" placeholder="请输入突变氨基酸" type="text"
+                 name="mutation">
         </div>
-    </div>
-    <div class="form-group">
-      <label for="textArea" class="col-lg-2 control-label">基因序列</label>
-      <div class="col-lg-10">
-        <textarea class="form-control" rows="3" id="textArea" [(ngModel)]="job.gene_sequence" placeholder="请输入基因序列" name="gene_sequence"></textarea>
-        <span class="help-block"></span>
       </div>
-    </div>
-    <div class="form-group">
-      <div class="col-lg-10 col-lg-offset-2">
-        <button type="reset" class="btn btn-warning">重置</button>
-        <button type="submit" class="btn btn-default">提交</button>
+      <div class="form-group">
+        <label for="textArea" class="col-lg-2 control-label">基因序列</label>
+        <div class="col-lg-10">
+          <textarea class="form-control" rows="3" id="textArea" [(ngModel)]="job.gene_sequence" placeholder="请输入基因序列"
+                    name="gene_sequence"></textarea>
+          <span class="help-block"></span>
+        </div>
       </div>
-    </div>
-  </fieldset>
-</form>
-<ng-template #JobDetailBlock>
-  <h4 class="">恭喜!您的任务已经成功提交,稍后我们会向您预留的邮箱发送任务进度。收到邮件后请及时返回查看.</h4>
-  <button (click)="newJob()" class="btn btn-default">继续提交</button>
-</ng-template>
+      <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2">
+          <button type="reset" class="btn btn-warning">重置</button>
+          <button type="submit" class="btn btn-default">提交</button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+  <ng-template #JobDetailBlock>
+    <h4 class="">恭喜!您的任务已经成功提交,稍后我们会向您预留的邮箱发送任务进度。收到邮件后请及时返回查看.</h4>
+    <button (click)="newJob()" class="btn btn-default">继续提交</button>
+  </ng-template>
 </div>
-<div *ngIf="currentUser" class="col-mg-4 table-bordered">
-aaaa
+<div class="col-md-4">
+  <div *ngIf="currentUser" class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">最近提交任务</h3>
+    </div>
+    <div class="panel-body">
+      <div *ngIf="jobList;else emptyJobBlock" class="list-group">
+        <a *ngFor="let job of jobList" class="list-group-item" (click)="showJobDetail(job.id)">
+          {{job.gene_name}} ({{job.created_at | date:"yyyy/MM/dd"}}) <span [innerHTML]="job.status | jobStatus"></span>
+        </a>
+      </div>
+      <ng-template #emptyJobBlock>
+        <p>您还没有提交任何任务。</p>
+      </ng-template>
+    </div>
+  </div>
 </div>
