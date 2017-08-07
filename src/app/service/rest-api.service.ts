@@ -127,5 +127,8 @@ export class RestApiService{
     return this._postData('jobs/', job, true);
   }
 
+  getJobDetail(id: string): Observable<any>{
+    return this.fetchData(`jobs/${id}/?include[]=report_set.*&include[]=report_set.reportunit_set.*`, true);
+  }
 
 }

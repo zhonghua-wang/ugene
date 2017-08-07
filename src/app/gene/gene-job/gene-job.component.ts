@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+
 import {Job} from "../../models/job";
 import {Mutant} from "../../models/mutant";
 import {User} from "../../models/user";
@@ -18,7 +20,7 @@ export class GeneJobComponent implements OnInit {
   currentUser: User = new User();
 
 
-  constructor(private restApiService: RestApiService) {
+  constructor(private restApiService: RestApiService, private router: Router) {
   }
 
   ngOnInit() {
@@ -41,7 +43,10 @@ export class GeneJobComponent implements OnInit {
     this.job.user = this.currentUser.id;
     console.log(this.job)
     this.restApiService.addJob(this.job).subscribe(
-      data => this.submitted = true,
+      data => {
+        this.submitted = true;
+        this.getJobList();
+      },
       error => console.log('error occur at submitting job.')
   )
 
@@ -53,5 +58,7 @@ export class GeneJobComponent implements OnInit {
       .subscribe(jobList => this.jobList = jobList)
   }
 
-
+  showJobDetail(job: Job){
+    this.router.navigate(['/job-detail', job.id])
+  }
 }

@@ -55,7 +55,7 @@
     </div>
     <div class="panel-body">
       <div *ngIf="jobList;else emptyJobBlock" class="list-group">
-        <a *ngFor="let job of jobList" class="list-group-item" (click)="showJobDetail(job.id)">
+        <a *ngFor="let job of jobList" class="list-group-item" (click)="showJobDetail(job)">
           {{job.gene_name}} ({{job.created_at | date:"yyyy/MM/dd"}}) <span [innerHTML]="job.status | jobStatus"></span>
         </a>
       </div>

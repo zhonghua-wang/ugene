@@ -7,6 +7,7 @@ import {PageNotFoundComponent} from "./error/page-not-found/page-not-found.compo
 import {SignUpComponent} from "./user/sign-up/sign-up.component";
 import {SignInComponent} from "./user/sign-in/sign-in.component";
 import {GeneJobComponent} from "./gene/gene-job/gene-job.component";
+import {JobDetailComponent} from "./gene/job-detail/job-detail.component";
 
 const routes: Routes = [
   {
@@ -29,6 +30,10 @@ const routes: Routes = [
   {
     path: 'gene',
     component: GeneJobComponent,
+  },
+  {
+    path: 'job-detail/:id',
+    component: JobDetailComponent
   },
   {path: 'sign-in' , component: SignInComponent} ,
   {path: 'sign-up' , component: SignUpComponent},
